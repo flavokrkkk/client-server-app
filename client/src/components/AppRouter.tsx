@@ -1,9 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import { privateRoute, publicRoute } from "../routes/routes";
 import ShopPage from "../pages/ShopPage/ShopPage";
+import { useAppSelector } from "../hooks/useAppSelector";
+import { UserSelectors } from "../store/selectors/selectors";
 
 const AppRouter = () => {
-  const isAuth = true;
+  const { isAuth } = useAppSelector(UserSelectors);
 
   return (
     <>
