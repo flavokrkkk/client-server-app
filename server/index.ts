@@ -1,12 +1,12 @@
 //Главный файл с запуском сервера и всеми зависимостями
 const express = require("express");
 const dotenv = require("dotenv").config();
-const sequelize = require("./db.js");
-const models = require("./models/models.js");
+const sequelize = require("./db.ts");
+const models = require("./models/models.ts");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
-const router = require("./routes/index.js");
-const errorHandler = require("./middleware/ErrorHandlingMiddleware.js");
+const router = require("./routes/index.ts");
+const errorHandler = require("./middleware/ErrorHandlingMiddleware.ts");
 const path = require("path");
 
 const PORT = process.env.PORT || 5000;
