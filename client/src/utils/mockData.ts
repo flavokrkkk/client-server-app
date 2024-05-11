@@ -5,6 +5,8 @@ import { IType } from "../models/IType";
 export const types = <IType[]>[
   { id: 1, name: "Смартфоны" },
   { id: 2, name: "Компьютеры" },
+  { id: 4, name: "Ноутбуки" },
+  { id: 3, name: "Телевизоры" },
 ];
 
 export const brands = <IBrand[]>[
