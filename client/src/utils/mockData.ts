@@ -1,4 +1,5 @@
 import { IBrand } from "../models/IBrand";
+import { IDescription } from "../models/IDescription";
 import { IDevice } from "../models/IDevice";
 import { IType } from "../models/IType";
 
@@ -19,65 +20,52 @@ export const brands = <IBrand[]>[
 export const devices = <IDevice[]>[
   {
     id: 1,
-    name: "Iphone 14",
+    name: "IPhone 15",
     price: 90000,
     rating: 5,
-    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
+    img: "https://app-room44.ru/wp-content/uploads/2023/09/image_2023-11-09_11-07-25-600x600.png",
   },
   {
     id: 2,
-    name: "Iphone 14",
+    name: "IPhone 15 ",
     price: 90000,
     rating: 5,
-    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
+    img: "https://app-room44.ru/wp-content/uploads/2023/09/image_2023-11-09_11-07-04-600x600.png",
   },
   {
     id: 3,
     name: "Iphone 14",
     price: 90000,
     rating: 5,
-    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
+    img: "https://app-room44.ru/wp-content/uploads/2022/09/Novyi-proekt10-1.png",
   },
   {
     id: 4,
-    name: "Iphone 14",
+    name: "IPhone 14 Pro Max",
     price: 90000,
     rating: 5,
-    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
+    img: "https://app-room44.ru/wp-content/uploads/2022/09/telefon_iphone_14_128gb_dual_sim_purple_3-1000x1000-1-600x600.jpg",
   },
   {
     id: 5,
-    name: "Iphone 14",
+    name: "IPhone 13 Pro Max",
     price: 90000,
     rating: 5,
-    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
+    img: "https://app-room44.ru/wp-content/uploads/2022/04/apple-iphone-13-pink-1000x1000-1-600x600.jpg",
   },
-  {
-    id: 4,
-    name: "Iphone 14",
-    price: 90000,
-    rating: 5,
-    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
-  },
-  {
-    id: 5,
-    name: "Iphone 14",
-    price: 90000,
-    rating: 5,
-    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
-  },
-  {
-    id: 4,
-    name: "Iphone 14",
-    price: 90000,
-    rating: 5,
-    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
-  },
-  {
-    id: 5,
-    name: "Iphone 14",
-    price: 90000,
-    rating: 5,
-    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
-  },
+];
+
+export const device = <IDevice>{
+  id: 1,
+  name: "IPhone 15",
+  price: 90000,
+  rating: 5,
+  img: "https://app-room44.ru/wp-content/uploads/2023/09/image_2023-11-09_11-07-25-600x600.png",
+};
+
+export const description = <IDescription[]>[
+  { id: 1, title: "Оперативная память", description: "128гб" },
+  { id: 2, title: "Оперативная память", description: "128гб" },
+  { id: 3, title: "Оперативная память", description: "128гб" },
+  { id: 4, title: "Оперативная память", description: "128гб" },
 ];

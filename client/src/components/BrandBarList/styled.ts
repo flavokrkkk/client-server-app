@@ -4,8 +4,8 @@ interface CardNameProps {
   isSelectedBrand: boolean;
 }
 export const WrapperCard = styled.div`
-  width: 150px;
-  margin-right: 10px;
+  width: 105px;
+  margin-right: 40px;
 `;
 
 export const CardName = styled.div<CardNameProps>`
