@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { brands, devices, types } from "../../../utils/mockData";
-import { DeviceState, SelectableType } from "./types";
+import { DeviceState } from "./types";
 import { IType } from "../../../models/IType";
 import { IBrand } from "../../../models/IBrand";
 import { IDevice } from "../../../models/IDevice";
@@ -9,7 +9,8 @@ export const initialState = <DeviceState>{
   types: types,
   brands: brands,
   devices: devices,
-  selected: {},
+  selectedType: {},
+  selectedBrand: {},
 };
 
 export const deviceSlice = createSlice({
@@ -25,8 +26,11 @@ export const deviceSlice = createSlice({
     setDevice(state, { payload }: PayloadAction<IDevice[]>) {
       state.types = payload;
     },
-    setSelected(state, { payload }: PayloadAction<SelectableType>) {
-      state.selected = payload;
+    setSelectedType(state, { payload }: PayloadAction<IType>) {
+      state.selectedType = payload;
+    },
+    setSelectedBrand(state, { payload }: PayloadAction<IBrand>) {
+      state.selectedBrand = payload;
     },
   },
 });

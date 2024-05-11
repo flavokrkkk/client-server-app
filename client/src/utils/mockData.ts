@@ -12,6 +12,8 @@ export const types = <IType[]>[
 export const brands = <IBrand[]>[
   { id: 1, name: "Apple" },
   { id: 2, name: "Samsung" },
+  { id: 3, name: "Xiaomi" },
+  { id: 4, name: "Lenovo" },
 ];
 
 export const devices = <IDevice[]>[
@@ -31,6 +33,34 @@ export const devices = <IDevice[]>[
   },
   {
     id: 3,
+    name: "Iphone 14",
+    price: 90000,
+    rating: 5,
+    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
+  },
+  {
+    id: 4,
+    name: "Iphone 14",
+    price: 90000,
+    rating: 5,
+    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
+  },
+  {
+    id: 5,
+    name: "Iphone 14",
+    price: 90000,
+    rating: 5,
+    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
+  },
+  {
+    id: 4,
+    name: "Iphone 14",
+    price: 90000,
+    rating: 5,
+    img: "https://avatars.mds.yandex.net/get-marketpic/6953693/pic55bc87b7a5f32f933c156730f40b56e1/orig",
+  },
+  {
+    id: 5,
     name: "Iphone 14",
     price: 90000,
     rating: 5,

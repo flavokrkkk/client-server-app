@@ -1,29 +1,28 @@
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Row } from "react-bootstrap";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { DeviceSelectors } from "../../../store/selectors/selectors";
-import { TypeBarWrapper } from "./styled";
 import { useActions } from "../../../hooks/useActions";
 import TypeBarList from "../../TypeBarList/TypeBarList";
 
 const TypeBar = () => {
-  const { types, selected } = useAppSelector(DeviceSelectors);
+  const { types, selectedType } = useAppSelector(DeviceSelectors);
 
-  const { setSelected } = useActions();
+  const { setSelectedType } = useActions();
 
   return (
-    <TypeBarWrapper>
+    <Row className=" d-flex">
       <ListGroup as="ol" numbered>
         {types.map((type) => (
           <TypeBarList
             key={type.id}
             type={type}
             types={types}
-            selected={selected}
-            setSelected={setSelected}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
           />
         ))}
       </ListGroup>
-    </TypeBarWrapper>
+    </Row>
   );
 };
 
