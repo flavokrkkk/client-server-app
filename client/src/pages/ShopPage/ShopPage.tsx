@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import TypeBar from "../../components/UI/TypeBar/TypeBar";
 import BrandBar from "../../components/UI/BrandBar/BrandBar";
-import DeviceBar from "../../components/DeviceBar/DeviceBar";
+import DeviceBar from "../../components/UI/DeviceBar/DeviceBar";
 
 const ShopPage = () => {
   return (

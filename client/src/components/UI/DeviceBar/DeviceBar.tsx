@@ -1,7 +1,7 @@
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { DeviceSelectors } from "../../store/selectors/selectors";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import { DeviceSelectors } from "../../../store/selectors/selectors";
 import { WrapperDeviceBar } from "./styled";
-import DeviceList from "../DeviceList/DeviceList";
+import DeviceList from "../../DeviceList/DeviceList";
 
 const DeviceBar = () => {
   const { devices } = useAppSelector(DeviceSelectors);

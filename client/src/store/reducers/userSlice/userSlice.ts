@@ -3,7 +3,7 @@ import { UserState } from "./types";
 import { IUser } from "../../../models/IUser";
 
 export const initialState = <UserState>{
-  isAuth: false,
+  isAuth: true,
   user: {},
 };
 
