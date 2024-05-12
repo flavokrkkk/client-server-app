@@ -1,4 +1,5 @@
-const ApiError = require("../error/ApiError.ts");
+import ApiError from "../error/ApiError";
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User, Basket } = require("../models/models.ts");
@@ -18,7 +19,7 @@ class UserController {
     const candidate = await User.findOne({ where: { email } });
     if (candidate) {
       return next(
-        ApiError.badRequest("Пользователь с таким email уже существует!")
+        ApiError.badRequest("Пользователь с таким email уже существует!"),
       );
     }
     const hashPassword = await bcrypt.hash(password, 5);

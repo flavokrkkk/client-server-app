@@ -6,3 +6,7 @@ export const enum RoutesName {
   REGISTRATION = "/registration",
   BASKET = "/basket",
 }
+
+export const enum httpHost {
+  REACT_APP_API_URL = "http://localhost:7000/",
+}

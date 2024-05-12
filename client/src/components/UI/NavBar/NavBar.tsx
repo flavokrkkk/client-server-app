@@ -8,12 +8,12 @@ import { useActions } from "../../../hooks/useActions";
 const NavBar = () => {
   const { isAuth } = useAppSelector(UserSelectors);
 
-  const { setIsAuth } = useActions();
+  const { setIsAuth, setUser } = useActions();
 
   const navigate = useNavigate();
 
   const toggleIsAuth = () => {
-    setIsAuth(true);
+    navigate(RoutesName.LOGIN);
   };
 
   const handleNavigationToAdmin = () => {
@@ -21,7 +21,8 @@ const NavBar = () => {
   };
 
   const handleNavigationToLogin = () => {
-    navigate(RoutesName.LOGIN);
+    setUser({});
+    setIsAuth(false);
   };
 
   return (

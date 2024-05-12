@@ -6,7 +6,7 @@ const checkRole = require("../middleware/checkRoleMiddleware.ts");
 
 //Расписываем маршруты
 
-router.post("/", checkRole("ADMIN"), typeController.create);
+router.post("/", typeController.create);
 router.get("/", typeController.getAll);
 
 module.exports = router;
