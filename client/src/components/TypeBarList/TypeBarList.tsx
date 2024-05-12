@@ -26,12 +26,16 @@ const TypeBarList: FC<TypeBarListProps> = ({
     <ListGroup.Item
       key={type.id}
       active={isSelectedType}
-      variant={isSelectedType ? "dark" : ""}
+      variant={isSelectedType ? "secondary" : ""}
       onClick={toggleSetSelected}
       className="d-flex justify-content-between align-items-start"
     >
       <ListGroupName className="ms-2 me-auto">{type.name}</ListGroupName>
-      <Badge text="light" bg="secondary" color="#fff" pill>
+      <Badge
+        text={isSelectedType ? "dark" : "light"}
+        bg={isSelectedType ? "light" : "dark"}
+        pill
+      >
         {types.length}
       </Badge>
     </ListGroup.Item>

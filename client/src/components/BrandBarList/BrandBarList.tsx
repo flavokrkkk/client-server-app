@@ -23,7 +23,7 @@ const BrandBarList: FC<BrandBarListProps> = ({
   return (
     <WrapperCard>
       <Card
-        bg={isSelectedBrand ? "secondary" : ""}
+        bg={isSelectedBrand ? "dark" : ""}
         className="p-3 text-center"
         onClick={toggleSetSelected}
       >
