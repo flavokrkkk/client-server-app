@@ -1,4 +1,4 @@
-import { $host } from "../../http";
+import { $authHost, $host } from "../../http";
 import { IBrand } from "../../models/IBrand";
 import { IDeviceData } from "../../models/IDeviceData";
 import { IType } from "../../models/IType";
@@ -19,6 +19,19 @@ export const AsyncDataActions = {
     }
   },
 
+  createAsyncType: (type: string) => async (dispatch: Dispatch) => {
+    try {
+      const { data } = await $authHost.post<IType[]>("api/type", {
+        type,
+      });
+      dispatch(AsyncDataActions.setAsyncTypes(data));
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  // - бренды
+
   fetchAsyncBrands: () => async (dispatch: Dispatch) => {
     try {
       const { data } = await $host.get<IBrand[]>("api/brand");
@@ -27,6 +40,18 @@ export const AsyncDataActions = {
       console.log(err);
     }
   },
+  createAsyncBrand: (brand: string) => async (dispatch: Dispatch) => {
+    try {
+      const { data } = await $authHost.post<IBrand[]>("api/brand", {
+        brand,
+      });
+      dispatch(AsyncDataActions.setAsyncTypes(data));
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  // - девайсы
 
   fetchAsyncDevices: () => async (dispatch: Dispatch) => {
     try {

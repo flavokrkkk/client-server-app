@@ -3,6 +3,7 @@ import { DeviceCard, TitleDevice } from "./styled";
 import { IDevice } from "../models/IDevice";
 import { FC } from "react";
 import { IDescription } from "../models/IDescription";
+import { httpHost } from "../utils/enums";
 
 interface DeviceItemProps {
   device: IDevice;
@@ -15,7 +16,11 @@ const DeviceItem: FC<DeviceItemProps> = ({ device, description }) => {
       <Row className=" d-flex justify-content-around">
         <Col md={4}>
           <TitleDevice>{device.name}</TitleDevice>
-          <Image width={300} height={300} src={device.img} />
+          <Image
+            width={300}
+            height={300}
+            src={httpHost.REACT_APP_API_URL + device.img}
+          />
         </Col>
         <Col md={6}>
           <div className="d-flex flex-column">
@@ -48,11 +53,8 @@ const DeviceItem: FC<DeviceItemProps> = ({ device, description }) => {
       </Row>
       <Row className="d-flex flex-column m-3">
         {description.map((info, index) => (
-          <DeviceCard index={index}>
-            <Row
-              className=" p-2"
-              key={info.id}
-            >{`${info.title}: ${info.description}`}</Row>
+          <DeviceCard key={info.id} index={index}>
+            <Row className=" p-2">{`${info.title}: ${info.description}`}</Row>
           </DeviceCard>
         ))}
       </Row>

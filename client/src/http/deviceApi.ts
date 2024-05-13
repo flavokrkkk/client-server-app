@@ -1,8 +1,10 @@
-import { $authHost } from ".";
+import { $host } from ".";
 
-export const createType = async (type: string) => {
-  const { data } = await $authHost.post("api/type", {
-    type,
-  });
-  return data;
+export const fetchAsyncDeviceById = async (id: string) => {
+  try {
+    const { data } = await $host.get(`api/device/${id}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 };
