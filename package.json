@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "pdf-ts": "^0.0.2",
+    "react-pdftotext": "^1.2.0"
+  }
+}

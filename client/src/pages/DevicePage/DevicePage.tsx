@@ -1,19 +1,19 @@
 import { Container } from "react-bootstrap";
 import DeviceItem from "../../DeviceItem/DeviceItem";
-import { useEffect, useState } from "react";
-import { IDevice } from "../../models/IDevice";
-import { fetchAsyncDeviceById } from "../../http/deviceApi";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { IDescription } from "../../models/IDescription";
+import { useActions } from "../../hooks/useActions";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { DeviceSelectors } from "../../store/selectors/selectors";
 
 const DevicePage = () => {
-  const [device, setDevice] = useState<IDevice>({
-    info: [] as IDescription[],
-  } as IDevice);
   const { id } = useParams<string>();
 
+  const { fetchAsyncDevice } = useActions();
+  const { device } = useAppSelector(DeviceSelectors);
+
   useEffect(() => {
-    fetchAsyncDeviceById(id!).then((dev) => setDevice(dev));
+    fetchAsyncDevice(id!);
   }, []);
 
   return (

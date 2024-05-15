@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AppRouter from "./components/AppRouter";
 import NavBar from "./components/UI/NavBar/NavBar";
 import { useActions } from "./hooks/useActions";
 import { check } from "./http/userApi";
 import { Spinner } from "react-bootstrap";
+import { useAppSelector } from "./hooks/useAppSelector";
+import { UserSelectors } from "./store/selectors/selectors";
 
 function App() {
-  const { setIsAuth, setUser } = useActions();
+  const { setIsAuth, setUser, setIsLoading } = useActions();
 
-  const [loading, setLoading] = useState(true);
+  const { isLoading } = useAppSelector(UserSelectors);
 
   useEffect(() => {
     check()
@@ -16,10 +18,10 @@ function App() {
         setUser(data);
         setIsAuth(true);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setIsLoading(false));
   }, []);
 
-  if (loading) {
+  if (isLoading) {
     return <Spinner animation={"grow"} />;
   }
 

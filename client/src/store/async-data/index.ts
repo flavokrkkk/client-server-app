@@ -1,6 +1,6 @@
-import { $authHost, $host } from "../../http";
+import { $authHost } from "../../http";
+import { DeviceService } from "../../http/deviceApi";
 import { IBrand } from "../../models/IBrand";
-import { IDeviceData } from "../../models/IDeviceData";
 import { IType } from "../../models/IType";
 import { deviceSlice } from "../reducers/deviceSlice/deviceSlice";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -8,11 +8,12 @@ import { Dispatch } from "@reduxjs/toolkit";
 export const AsyncDataActions = {
   setAsyncTypes: deviceSlice.actions.setTypes,
   setAsyncBrands: deviceSlice.actions.setBrand,
-  setAsyncDevices: deviceSlice.actions.setDevice,
+  setAsyncDevices: deviceSlice.actions.setDevices,
+  setAsyncDevice: deviceSlice.actions.setDevice,
 
   fetchAsyncTypes: () => async (dispatch: Dispatch) => {
     try {
-      const { data } = await $host.get<IType[]>("api/type");
+      const { data } = await DeviceService.fetchTypes();
       dispatch(AsyncDataActions.setAsyncTypes(data));
     } catch (err) {
       console.log(err);
@@ -34,7 +35,7 @@ export const AsyncDataActions = {
 
   fetchAsyncBrands: () => async (dispatch: Dispatch) => {
     try {
-      const { data } = await $host.get<IBrand[]>("api/brand");
+      const { data } = await DeviceService.fetchBrands();
       dispatch(AsyncDataActions.setAsyncBrands(data));
     } catch (err) {
       console.log(err);
@@ -55,8 +56,17 @@ export const AsyncDataActions = {
 
   fetchAsyncDevices: () => async (dispatch: Dispatch) => {
     try {
-      const { data } = await $host.get<IDeviceData>("api/device");
+      const { data } = await DeviceService.fetchDevices();
       dispatch(AsyncDataActions.setAsyncDevices(data.rows));
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  fetchAsyncDevice: (id: string) => async (dispatch: Dispatch) => {
+    try {
+      const response = await DeviceService.fetchDevice(id);
+      dispatch(AsyncDataActions.setAsyncDevice(response.data));
     } catch (err) {
       console.log(err);
     }

@@ -6,6 +6,7 @@ import { JwtPayload } from "jwt-decode";
 export const initialState = <UserState>{
   isAuth: false,
   user: {},
+  isLoading: true,
 };
 
 export const userSlice = createSlice({
@@ -17,6 +18,9 @@ export const userSlice = createSlice({
     },
     setUser(state, { payload }: PayloadAction<IUser | JwtPayload>) {
       state.user = payload;
+    },
+    setIsLoading(state, { payload }: PayloadAction<boolean>) {
+      state.isLoading = payload;
     },
   },
 });

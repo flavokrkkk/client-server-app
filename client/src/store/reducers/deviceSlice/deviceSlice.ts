@@ -3,11 +3,13 @@ import { DeviceState } from "./types";
 import { IType } from "../../../models/IType";
 import { IBrand } from "../../../models/IBrand";
 import { IDevice } from "../../../models/IDevice";
+import { IDescription } from "../../../models/IDescription";
 
 export const initialState = <DeviceState>{
   types: [] as IType[],
   brands: [] as IBrand[],
   devices: [] as IDevice[],
+  device: { info: [] as IDescription[] } as IDevice,
   selectedType: {},
   selectedBrand: {},
 };
@@ -22,8 +24,11 @@ export const deviceSlice = createSlice({
     setBrand(state, { payload }: PayloadAction<IBrand[]>) {
       state.brands = payload;
     },
-    setDevice(state, { payload }: PayloadAction<IDevice[]>) {
+    setDevices(state, { payload }: PayloadAction<IDevice[]>) {
       state.devices = payload;
+    },
+    setDevice(state, { payload }: PayloadAction<IDevice>) {
+      state.device = payload;
     },
     setSelectedType(state, { payload }: PayloadAction<IType>) {
       state.selectedType = payload;
