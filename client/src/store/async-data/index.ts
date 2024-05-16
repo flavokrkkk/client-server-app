@@ -1,4 +1,3 @@
-import { $authHost } from "../../http";
 import { DeviceService } from "../../http/deviceApi";
 import { IBrand } from "../../models/IBrand";
 import { IType } from "../../models/IType";
@@ -20,15 +19,9 @@ export const AsyncDataActions = {
     }
   },
 
-  createAsyncType: (type: string) => async (dispatch: Dispatch) => {
-    try {
-      const { data } = await $authHost.post<IType[]>("api/type", {
-        type,
-      });
-      dispatch(AsyncDataActions.setAsyncTypes(data));
-    } catch (err) {
-      console.log(err);
-    }
+  createAsyncTypes: (type: IType) => async () => {
+    const { data } = await DeviceService.createType(type);
+    return data;
   },
 
   // - бренды
@@ -41,15 +34,10 @@ export const AsyncDataActions = {
       console.log(err);
     }
   },
-  createAsyncBrand: (brand: string) => async (dispatch: Dispatch) => {
-    try {
-      const { data } = await $authHost.post<IBrand[]>("api/brand", {
-        brand,
-      });
-      dispatch(AsyncDataActions.setAsyncTypes(data));
-    } catch (err) {
-      console.log(err);
-    }
+
+  createAsyncBrand: (brand: IBrand) => async () => {
+    const { data } = await DeviceService.createBrand(brand);
+    return data;
   },
 
   // - девайсы
@@ -66,6 +54,7 @@ export const AsyncDataActions = {
   fetchAsyncDevice: (id: string) => async (dispatch: Dispatch) => {
     try {
       const response = await DeviceService.fetchDevice(id);
+      console.log(response.data);
       dispatch(AsyncDataActions.setAsyncDevice(response.data));
     } catch (err) {
       console.log(err);
