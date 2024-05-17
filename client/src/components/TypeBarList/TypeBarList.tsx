@@ -23,22 +23,24 @@ const TypeBarList: FC<TypeBarListProps> = ({
   const isSelectedType = selectedType.id === type.id;
 
   return (
-    <ListGroup.Item
-      key={type.id}
-      active={isSelectedType}
-      variant={isSelectedType ? "secondary" : ""}
-      onClick={toggleSetSelected}
-      className="d-flex justify-content-between align-items-start"
-    >
-      <ListGroupName className="ms-2 me-auto">{type.name}</ListGroupName>
-      <Badge
-        text={isSelectedType ? "dark" : "light"}
-        bg={isSelectedType ? "light" : "dark"}
-        pill
+    <>
+      <ListGroup.Item
+        key={type.id}
+        active={isSelectedType}
+        variant={isSelectedType ? "secondary" : ""}
+        onClick={toggleSetSelected}
+        className="d-flex justify-content-between align-items-start"
       >
-        {types.length}
-      </Badge>
-    </ListGroup.Item>
+        <ListGroupName className="ms-2 me-auto">{type.name}</ListGroupName>
+        <Badge
+          text={isSelectedType ? "dark" : "light"}
+          bg={isSelectedType ? "light" : "dark"}
+          pill
+        >
+          {types.length}
+        </Badge>
+      </ListGroup.Item>
+    </>
   );
 };
 

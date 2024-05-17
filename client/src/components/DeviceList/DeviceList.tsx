@@ -4,7 +4,6 @@ import { FC } from "react";
 import { CardBody, WrapperCard } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { RoutesName, httpHost } from "../../utils/enums";
-
 interface DeviceListProps {
   device: IDevice;
 }

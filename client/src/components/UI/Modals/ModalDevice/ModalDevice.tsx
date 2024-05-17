@@ -9,12 +9,25 @@ interface ModalBrandProps {
   isShow: boolean;
   onHideModal?: () => void;
 }
+interface FileInputEvent extends React.SyntheticEvent {
+  target: HTMLInputElement & EventTarget;
+}
 
 const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
   const { types, brands } = useAppSelector(DeviceSelectors);
 
   const [info, setInfo] = useState<IDescription[]>([]);
 
+  const [title, setTitle] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [file, setFile] = useState<File | null>(null);
+
+  const [type, setType] = useState<string>("");
+  const [brand, setBrand] = useState<string>("");
+
+  const handleSelectFile = (event: FileInputEvent) => {
+    event.target.files && setFile(event.target.files[0]);
+  };
   const handleSetDescription = () => {
     setInfo([
       ...info,
@@ -42,7 +55,7 @@ const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
           <div className="d-flex gap-3 justify-content-center">
             <Dropdown className="mt-3">
               <Dropdown.Toggle variant="outline-dark">
-                Выберите тип
+                {type ? type : "Выберите тип"}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {types.map((type) => (
@@ -73,7 +86,11 @@ const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
             placeholder="Введите стоимость устройства"
           />
 
-          <FormControl className="mt-3" type="file" />
+          <FormControl
+            className="mt-3"
+            type="file"
+            onChange={handleSelectFile}
+          />
 
           <hr />
           <Button variant="outline-dark" onClick={handleSetDescription}>

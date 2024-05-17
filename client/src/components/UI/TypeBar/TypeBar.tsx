@@ -3,6 +3,7 @@ import { useAppSelector } from "../../../hooks/useAppSelector";
 import { DeviceSelectors } from "../../../store/selectors/selectors";
 import { useActions } from "../../../hooks/useActions";
 import TypeBarList from "../../TypeBarList/TypeBarList";
+import DateFormat from "../../../utils/DateFormat";
 
 const TypeBar = () => {
   const { types, selectedType } = useAppSelector(DeviceSelectors);
