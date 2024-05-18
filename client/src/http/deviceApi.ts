@@ -9,8 +9,15 @@ export class DeviceService {
   static async fetchTypes(): Promise<AxiosResponse<IType[]>> {
     return $host.get<IType[]>("api/type");
   }
-  static async fetchBrands(): Promise<AxiosResponse<IBrand[]>> {
-    return $host.get<IBrand[]>("api/brand");
+  static async fetchBrands(
+    typeId,
+    brandId,
+    page,
+    limit = 5,
+  ): Promise<AxiosResponse<IBrand[]>> {
+    return $host.get<IBrand[]>("api/brand", {
+      params: { typeId, brandId, page, limit },
+    });
   }
 
   static async fetchDevices(): Promise<AxiosResponse<IDeviceData>> {

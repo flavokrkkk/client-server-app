@@ -27,14 +27,21 @@ export const AsyncDataActions = {
 
   // - бренды
 
-  fetchAsyncBrands: () => async (dispatch: Dispatch) => {
-    try {
-      const { data } = await DeviceService.fetchBrands();
-      dispatch(AsyncDataActions.setAsyncBrands(data));
-    } catch (err) {
-      console.log(err);
-    }
-  },
+  fetchAsyncBrands:
+    (typeId, brandId, page, limit = 5) =>
+    async (dispatch: Dispatch) => {
+      try {
+        const { data } = await DeviceService.fetchBrands(
+          typeId,
+          brandId,
+          page,
+          (limit = 5),
+        );
+        dispatch(AsyncDataActions.setAsyncBrands(data));
+      } catch (err) {
+        console.log(err);
+      }
+    },
 
   createAsyncBrand: (brand: IBrand) => async () => {
     const { data } = await DeviceService.createBrand(brand);

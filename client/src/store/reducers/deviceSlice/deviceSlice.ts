@@ -12,6 +12,9 @@ export const initialState = <DeviceState>{
   device: { info: [] as IDescription[] } as IDevice,
   selectedType: {},
   selectedBrand: {},
+  page: 1,
+  totalCount: 0,
+  limit: 3,
 };
 
 export const deviceSlice = createSlice({
@@ -35,6 +38,15 @@ export const deviceSlice = createSlice({
     },
     setSelectedBrand(state, { payload }: PayloadAction<IBrand>) {
       state.selectedBrand = payload;
+    },
+    setPage(state, { payload }: PayloadAction<number>) {
+      state.page = payload;
+    },
+    setTotalCount(state, { payload }: PayloadAction<number>) {
+      state.page = payload;
+    },
+    setLimit(state, { payload }: PayloadAction<number>) {
+      state.page = payload;
     },
   },
 });

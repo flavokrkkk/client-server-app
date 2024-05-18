@@ -4,6 +4,7 @@ import BrandBar from "../../components/UI/BrandBar/BrandBar";
 import DeviceBar from "../../components/UI/DeviceBar/DeviceBar";
 import { useActions } from "../../hooks/useActions";
 import { useEffect } from "react";
+import Pages from "../../components/UI/Pagination/Pages";
 
 const ShopPage = () => {
   const { fetchAsyncTypes, fetchAsyncBrands, fetchAsyncDevices } = useActions();
@@ -24,6 +25,7 @@ const ShopPage = () => {
           <Col md={9}>
             <BrandBar />
             <DeviceBar />
+            <Pages />
           </Col>
         </Row>
       </Container>
