@@ -25,7 +25,7 @@ const DeviceList: FC<DeviceListProps> = ({ device }) => {
             src={httpHost.REACT_APP_API_URL + device.img}
           />
           <CardBody>
-            <div>{device.name}</div>
+            <div className="text-center">{device.name}</div>
             <Button size="sm" variant="outline-dark" onClick={handleNavigate}>
               Buy
             </Button>

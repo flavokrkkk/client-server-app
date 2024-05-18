@@ -1,9 +1,12 @@
-import { FC, useState } from "react";
+import { ChangeEventHandler, FC, useEffect, useState } from "react";
 import { Button, Dropdown, Form, FormControl, Modal } from "react-bootstrap";
 import { useAppSelector } from "../../../../hooks/useAppSelector";
 import { DeviceSelectors } from "../../../../store/selectors/selectors";
 import { IDescription } from "../../../../models/IDescription";
 import ModalDeviceList from "../../../ModalDeviceList/ModalDeviceList";
+import { useActions } from "../../../../hooks/useActions";
+import { IType } from "../../../../models/IType";
+import { IBrand } from "../../../../models/IBrand";
 
 interface ModalBrandProps {
   isShow: boolean;
@@ -14,19 +17,41 @@ interface FileInputEvent extends React.SyntheticEvent {
 }
 
 const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
-  const { types, brands } = useAppSelector(DeviceSelectors);
+  const { types, brands, selectedBrand, selectedType } =
+    useAppSelector(DeviceSelectors);
+
+  const {
+    setSelectedBrand,
+    setSelectedType,
+    fetchAsyncBrands,
+    fetchAsyncTypes,
+    createAsyncDevice,
+  } = useActions();
 
   const [info, setInfo] = useState<IDescription[]>([]);
 
   const [title, setTitle] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
+  const [price, setPrice] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
 
-  const [type, setType] = useState<string>("");
-  const [brand, setBrand] = useState<string>("");
+  const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
 
-  const handleSelectFile = (event: FileInputEvent) => {
-    event.target.files && setFile(event.target.files[0]);
+  const handleChangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPrice(event.target.value);
+  };
+
+  const handleSelectType = (value: IType) => {
+    setSelectedType(value);
+  };
+
+  const handleSelectBrand = (value: IBrand) => {
+    setSelectedBrand(value);
+  };
+
+  const handleSelectFile: ChangeEventHandler = (event: FileInputEvent) => {
+    setFile(event.target.files && event.target.files[0]);
   };
   const handleSetDescription = () => {
     setInfo([
@@ -43,6 +68,27 @@ const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
     setInfo(info.filter((el) => el.id !== id));
   };
 
+  const handleChangeInfo = (key: string, value: string, id: number) => {
+    setInfo(info.map((el) => (el.id === id ? { ...el, [key]: value } : el)));
+  };
+
+  const handleAppendDevice = () => {
+    const formData = new FormData();
+    formData.append("name", title);
+    formData.append("price", `${price}`);
+    formData.append("img", file!);
+    formData.append("BrandId", `${selectedBrand.id}`);
+    formData.append("TypeId", `${selectedType.id}`);
+    formData.append("info", JSON.stringify(info));
+    createAsyncDevice(formData);
+    onHideModal?.();
+  };
+
+  useEffect(() => {
+    fetchAsyncTypes();
+    fetchAsyncBrands();
+  }, []);
+
   return (
     <Modal size="lg" centered show={isShow} onHide={onHideModal}>
       <Modal.Header closeButton>
@@ -55,21 +101,31 @@ const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
           <div className="d-flex gap-3 justify-content-center">
             <Dropdown className="mt-3">
               <Dropdown.Toggle variant="outline-dark">
-                {type ? type : "Выберите тип"}
+                {selectedType.name ? selectedType.name : "Выберите тип"}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {types.map((type) => (
-                  <Dropdown.Item key={type.id}>{type.name}</Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => handleSelectType(type)}
+                    key={type.id}
+                  >
+                    {type.name}
+                  </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
             </Dropdown>
             <Dropdown className="mt-3">
               <Dropdown.Toggle variant="outline-dark">
-                Выберите бренд
+                {selectedBrand.name ? selectedBrand.name : "Выберите бренд"}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {brands.map((brand) => (
-                  <Dropdown.Item key={brand.id}>{brand.name}</Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => handleSelectBrand(brand)}
+                    key={brand.id}
+                  >
+                    {brand.name}
+                  </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
             </Dropdown>
@@ -78,12 +134,16 @@ const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
           <FormControl
             className="mt-3"
             placeholder="Введите название устройства"
+            value={title}
+            onChange={handleChangeTitle}
           />
 
           <FormControl
             className="mt-3"
             type="number"
             placeholder="Введите стоимость устройства"
+            value={price}
+            onChange={handleChangePrice}
           />
 
           <FormControl
@@ -101,6 +161,7 @@ const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
               info={i}
               key={i.id}
               handleDeleteDescription={handleDeleteDescription}
+              handleChangeInfo={handleChangeInfo}
             />
           ))}
         </Form>
@@ -109,7 +170,9 @@ const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
         <Button variant="outline-dark" onClick={onHideModal}>
           Закрыть
         </Button>
-        <Button variant="outline-dark">Добавить</Button>
+        <Button variant="outline-dark" onClick={handleAppendDevice}>
+          Добавить
+        </Button>
       </Modal.Footer>
     </Modal>
   );

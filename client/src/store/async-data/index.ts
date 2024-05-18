@@ -1,3 +1,4 @@
+import { $authHost } from "../../http";
 import { DeviceService } from "../../http/deviceApi";
 import { IBrand } from "../../models/IBrand";
 import { IType } from "../../models/IType";
@@ -59,5 +60,10 @@ export const AsyncDataActions = {
     } catch (err) {
       console.log(err);
     }
+  },
+
+  createAsyncDevice: (device: FormData) => async () => {
+    const { data } = await $authHost.post("api/device", device);
+    return data;
   },
 };
