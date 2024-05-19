@@ -33,6 +33,6 @@ export default createGlobalStyle`
 `;
 
 export const BasketWrapperCard = styled.div`
-  width: 800px;
+  max-width: 800px;
   margin: 0 auto;
 `;

@@ -12,10 +12,10 @@ interface DeviceItemProps {
 }
 
 const DeviceItem: FC<DeviceItemProps> = ({ device, description }) => {
-  const { addDevice } = useActions();
+  const { addDeviceToBasket } = useActions();
 
   const handleAddedDeviceToBasket = () => {
-    addDevice(device);
+    addDeviceToBasket(device);
   };
 
   return (
@@ -57,7 +57,7 @@ const DeviceItem: FC<DeviceItemProps> = ({ device, description }) => {
               variant="outline-dark"
               onClick={handleAddedDeviceToBasket}
             >
-              Добавить в козину
+              Добавить в корзину
             </Button>
           </div>
         </Col>

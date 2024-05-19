@@ -9,10 +9,10 @@ interface BasketListProps {
 }
 
 const BasketList: FC<BasketListProps> = ({ device }) => {
-  const { deleteDevice } = useActions();
+  const { deleteBasketInLocalStorage } = useActions();
 
   const handleDeleteDevice = () => {
-    deleteDevice(device.id);
+    deleteBasketInLocalStorage(device.id);
   };
 
   return (

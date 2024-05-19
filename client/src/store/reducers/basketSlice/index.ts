@@ -10,8 +10,8 @@ export const basketSlice = createSlice({
   name: "basket",
   initialState,
   reducers: {
-    addDevice(state, { payload }: PayloadAction<IDevice>) {
-      state.basket.push(payload);
+    addDevice(state, { payload }: PayloadAction<IDevice[]>) {
+      state.basket = payload;
     },
     deleteDevice(state, { payload }: PayloadAction<number>) {
       state.basket = state.basket.filter((device) => device.id !== payload);
