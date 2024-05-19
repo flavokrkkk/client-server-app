@@ -13,8 +13,8 @@ export const initialState = <DeviceState>{
   selectedType: {},
   selectedBrand: {},
   page: 1,
-  totalCount: 0,
-  limit: 3,
+  totalCount: 0, //Общее кол-во товаров
+  limit: 3, //Лимит товаров на странице
 };
 
 export const deviceSlice = createSlice({
@@ -34,19 +34,21 @@ export const deviceSlice = createSlice({
       state.device = payload;
     },
     setSelectedType(state, { payload }: PayloadAction<IType>) {
+      state.page = 1;
       state.selectedType = payload;
     },
     setSelectedBrand(state, { payload }: PayloadAction<IBrand>) {
+      state.page = 1;
       state.selectedBrand = payload;
     },
     setPage(state, { payload }: PayloadAction<number>) {
       state.page = payload;
     },
     setTotalCount(state, { payload }: PayloadAction<number>) {
-      state.page = payload;
+      state.totalCount = payload;
     },
     setLimit(state, { payload }: PayloadAction<number>) {
-      state.page = payload;
+      state.limit = payload;
     },
   },
 });

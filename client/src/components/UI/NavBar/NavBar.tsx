@@ -4,6 +4,7 @@ import { UserSelectors } from "../../../store/selectors/selectors";
 import { NavLink, useNavigate } from "react-router-dom";
 import { RoutesName } from "../../../utils/enums";
 import { useActions } from "../../../hooks/useActions";
+import basketSwg from "../../../static/icons8-корзина-50.png";
 
 const NavBar = () => {
   const { isAuth } = useAppSelector(UserSelectors);
@@ -34,6 +35,11 @@ const NavBar = () => {
         {isAuth ? (
           <Nav className="ml-auto">
             <div className="d-flex gap-3">
+              <div>
+                <NavLink to={RoutesName.BASKET}>
+                  <img src={basketSwg} height={20} />
+                </NavLink>
+              </div>
               <Button
                 size="sm"
                 variant="outline-light"

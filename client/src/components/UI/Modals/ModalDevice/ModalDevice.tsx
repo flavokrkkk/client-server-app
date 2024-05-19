@@ -7,6 +7,8 @@ import ModalDeviceList from "../../../ModalDeviceList/ModalDeviceList";
 import { useActions } from "../../../../hooks/useActions";
 import { IType } from "../../../../models/IType";
 import { IBrand } from "../../../../models/IBrand";
+import DropDownListBrand from "./DropDownListBrand";
+import DropDownListType from "./DropDownListType";
 
 interface ModalBrandProps {
   isShow: boolean;
@@ -105,12 +107,11 @@ const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {types.map((type) => (
-                  <Dropdown.Item
-                    onClick={() => handleSelectType(type)}
+                  <DropDownListType
+                    item={type}
                     key={type.id}
-                  >
-                    {type.name}
-                  </Dropdown.Item>
+                    handleSelectType={handleSelectType}
+                  />
                 ))}
               </Dropdown.Menu>
             </Dropdown>
@@ -120,12 +121,11 @@ const ModalDevice: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {brands.map((brand) => (
-                  <Dropdown.Item
-                    onClick={() => handleSelectBrand(brand)}
+                  <DropDownListBrand
+                    item={brand}
                     key={brand.id}
-                  >
-                    {brand.name}
-                  </Dropdown.Item>
+                    handleSelectBrand={handleSelectBrand}
+                  />
                 ))}
               </Dropdown.Menu>
             </Dropdown>

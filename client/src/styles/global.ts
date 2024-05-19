@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   * {
@@ -30,4 +30,9 @@ export default createGlobalStyle`
     }
   }
 
+`;
+
+export const BasketWrapperCard = styled.div`
+  width: 800px;
+  margin: 0 auto;
 `;

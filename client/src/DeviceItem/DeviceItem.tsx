@@ -4,6 +4,7 @@ import { IDevice } from "../models/IDevice";
 import { FC } from "react";
 import { IDescription } from "../models/IDescription";
 import { httpHost } from "../utils/enums";
+import { useActions } from "../hooks/useActions";
 
 interface DeviceItemProps {
   device: IDevice;
@@ -11,6 +12,12 @@ interface DeviceItemProps {
 }
 
 const DeviceItem: FC<DeviceItemProps> = ({ device, description }) => {
+  const { addDevice } = useActions();
+
+  const handleAddedDeviceToBasket = () => {
+    addDevice(device);
+  };
+
   return (
     <>
       <Row className=" d-flex justify-content-around">
@@ -45,8 +52,12 @@ const DeviceItem: FC<DeviceItemProps> = ({ device, description }) => {
             <div className="d-flex">
               <TitleDevice className=" mt-4">{device.price}$</TitleDevice>
             </div>
-            <Button className=" mt-3" variant="outline-dark">
-              Купить
+            <Button
+              className=" mt-3"
+              variant="outline-dark"
+              onClick={handleAddedDeviceToBasket}
+            >
+              Добавить в козину
             </Button>
           </div>
         </Col>

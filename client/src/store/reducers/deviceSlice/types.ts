@@ -9,4 +9,7 @@ export interface DeviceState {
   device: IDevice;
   selectedType: IType;
   selectedBrand: IBrand;
+  page: number;
+  totalCount: number;
+  limit: number;
 }

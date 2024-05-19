@@ -10,6 +10,7 @@ export const AsyncDataActions = {
   setAsyncBrands: deviceSlice.actions.setBrand,
   setAsyncDevices: deviceSlice.actions.setDevices,
   setAsyncDevice: deviceSlice.actions.setDevice,
+  setTotalCount: deviceSlice.actions.setTotalCount,
 
   fetchAsyncTypes: () => async (dispatch: Dispatch) => {
     try {
@@ -27,21 +28,14 @@ export const AsyncDataActions = {
 
   // - бренды
 
-  fetchAsyncBrands:
-    (typeId, brandId, page, limit = 5) =>
-    async (dispatch: Dispatch) => {
-      try {
-        const { data } = await DeviceService.fetchBrands(
-          typeId,
-          brandId,
-          page,
-          (limit = 5),
-        );
-        dispatch(AsyncDataActions.setAsyncBrands(data));
-      } catch (err) {
-        console.log(err);
-      }
-    },
+  fetchAsyncBrands: () => async (dispatch: Dispatch) => {
+    try {
+      const { data } = await DeviceService.fetchBrands();
+      dispatch(AsyncDataActions.setAsyncBrands(data));
+    } catch (err) {
+      console.log(err);
+    }
+  },
 
   createAsyncBrand: (brand: IBrand) => async () => {
     const { data } = await DeviceService.createBrand(brand);
@@ -50,19 +44,31 @@ export const AsyncDataActions = {
 
   // - девайсы
 
-  fetchAsyncDevices: () => async (dispatch: Dispatch) => {
-    try {
-      const { data } = await DeviceService.fetchDevices();
-      dispatch(AsyncDataActions.setAsyncDevices(data.rows));
-    } catch (err) {
-      console.log(err);
-    }
-  },
+  fetchAsyncDevices:
+    (
+      typeId: number | null,
+      brandId: number | null,
+      page: number,
+      limit: number = 5,
+    ) =>
+    async (dispatch: Dispatch) => {
+      try {
+        const { data } = await DeviceService.fetchDevices(
+          typeId,
+          brandId,
+          page,
+          limit,
+        );
+        dispatch(AsyncDataActions.setTotalCount(data.count));
+        dispatch(AsyncDataActions.setAsyncDevices(data.rows));
+      } catch (err) {
+        console.log(err);
+      }
+    },
 
   fetchAsyncDevice: (id: string) => async (dispatch: Dispatch) => {
     try {
       const response = await DeviceService.fetchDevice(id);
-      console.log(response.data);
       dispatch(AsyncDataActions.setAsyncDevice(response.data));
     } catch (err) {
       console.log(err);
