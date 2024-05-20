@@ -1,19 +1,29 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { IDevice } from "../../models/IDevice";
 import { Button, Card, CardBody, Image } from "react-bootstrap";
 import { httpHost } from "../../utils/enums";
 import { useActions } from "../../hooks/useActions";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { BasketSelectors } from "../../store/selectors/selectors";
 
 interface BasketListProps {
   device: IDevice;
 }
 
 const BasketList: FC<BasketListProps> = ({ device }) => {
-  const { deleteBasketInLocalStorage } = useActions();
+  const { deleteBasketInLocalStorage, countDeviceInBasket } = useActions();
+
+  const { count } = useAppSelector(BasketSelectors);
 
   const handleDeleteDevice = () => {
     deleteBasketInLocalStorage(device.id);
   };
+
+  useEffect(() => {
+    countDeviceInBasket(device);
+  });
+
+  console.log(count);
 
   return (
     <Card className=" p-2 mb-4">
@@ -26,6 +36,15 @@ const BasketList: FC<BasketListProps> = ({ device }) => {
               <h5>{el.description}</h5>
             ))}
           </div>
+          <div className=" d-flex justify-content-center gap-3">
+            <Button variant="outline-dark" className=" mb-2">
+              -
+            </Button>
+            <Button variant="outline-dark" className=" mb-2">
+              +
+            </Button>
+          </div>
+          <div className=" text-center">{count}</div>
         </div>
       </CardBody>
       <Button variant="outline-dark" className=" mb-2">

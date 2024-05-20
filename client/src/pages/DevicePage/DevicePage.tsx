@@ -4,13 +4,17 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useActions } from "../../hooks/useActions";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { DeviceSelectors } from "../../store/selectors/selectors";
+import {
+  BasketSelectors,
+  DeviceSelectors,
+} from "../../store/selectors/selectors";
 
 const DevicePage = () => {
   const { id } = useParams<string>();
 
-  const { fetchAsyncDevice } = useActions();
+  const { fetchAsyncDevice, hasDeviceInBasket } = useActions();
   const { device } = useAppSelector(DeviceSelectors);
+  const { isBasket } = useAppSelector(BasketSelectors);
 
   useEffect(() => {
     fetchAsyncDevice(id!);
@@ -18,7 +22,13 @@ const DevicePage = () => {
 
   return (
     <Container className="mt-5">
-      <DeviceItem description={device.info} device={device} />
+      <DeviceItem
+        description={device.info}
+        device={device}
+        isBasket={isBasket}
+        id={id!}
+        hasDeviceInBasket={hasDeviceInBasket}
+      />
     </Container>
   );
 };

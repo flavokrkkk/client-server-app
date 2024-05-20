@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Card, Col, Image, Row } from "react-bootstrap";
 import { DeviceCard, TitleDevice } from "./styled";
 import { IDevice } from "../models/IDevice";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { IDescription } from "../models/IDescription";
 import { httpHost } from "../utils/enums";
 import { useActions } from "../hooks/useActions";
@@ -9,14 +9,27 @@ import { useActions } from "../hooks/useActions";
 interface DeviceItemProps {
   device: IDevice;
   description: IDescription[];
+  isBasket: boolean;
+  id: string;
+  hasDeviceInBasket: (id: string) => void;
 }
 
-const DeviceItem: FC<DeviceItemProps> = ({ device, description }) => {
+const DeviceItem: FC<DeviceItemProps> = ({
+  device,
+  id,
+  hasDeviceInBasket,
+  description,
+  isBasket,
+}) => {
   const { addDeviceToBasket } = useActions();
 
   const handleAddedDeviceToBasket = () => {
     addDeviceToBasket(device);
   };
+
+  useEffect(() => {
+    hasDeviceInBasket(id);
+  }, [handleAddedDeviceToBasket]);
 
   return (
     <>
@@ -55,9 +68,10 @@ const DeviceItem: FC<DeviceItemProps> = ({ device, description }) => {
             <Button
               className=" mt-3"
               variant="outline-dark"
+              disabled={isBasket}
               onClick={handleAddedDeviceToBasket}
             >
-              Добавить в корзину
+              {isBasket ? "Товар в корзине" : "Добавить в корзину"}
             </Button>
           </div>
         </Col>

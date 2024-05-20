@@ -1,5 +1,7 @@
 import { IDevice } from "../../../models/IDevice";
 
 export interface BasketState {
-  basket: Array;
+  basket: Array<IDevice>;
+  isBasket: boolean;
+  count: number;
 }

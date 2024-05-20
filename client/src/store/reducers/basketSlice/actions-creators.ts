@@ -5,6 +5,8 @@ import { IDevice } from "../../../models/IDevice";
 export const BasketActionCreators = {
   addDevice: basketSlice.actions.addDevice,
   deleteBasket: basketSlice.actions.deleteDevice,
+  isBasket: basketSlice.actions.hasIsBasket,
+  count: basketSlice.actions.setCount,
 
   addDeviceToBasket: (device: IDevice) => (dispatch: Dispatch) => {
     try {
@@ -46,7 +48,7 @@ export const BasketActionCreators = {
     }
   },
 
-  countDeviceInBasket: (device: IDevice) => () => {
+  countDeviceInBasket: (device: IDevice) => (dispatch: Dispatch) => {
     try {
       if (localStorage.getItem("basket")) {
         const devices: IDevice[] = JSON.parse(
@@ -57,22 +59,23 @@ export const BasketActionCreators = {
           (basketDevice) => basketDevice.name === device.name,
         ).length;
 
-        return count;
+        dispatch(BasketActionCreators.count(count));
       }
     } catch (err) {
       console.log(err);
     }
   },
 
-  hasDeviceInBasket: (device: IDevice) => () => {
+  hasDeviceInBasket: (id: string) => (dispatch: Dispatch) => {
     if (localStorage.getItem("basket")) {
       const devices: IDevice[] = JSON.parse(
         localStorage.getItem("basket") || "[]",
       );
-
-      const isBasket = devices.filter((dev) => dev.id === device.id);
-
-      return isBasket.length ? true : false;
+      console.log(devices);
+      const isBasket = devices.find((c) => c.id === Number(id));
+      return isBasket
+        ? dispatch(BasketActionCreators.isBasket(true))
+        : dispatch(BasketActionCreators.isBasket(false));
     }
   },
 };
