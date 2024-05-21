@@ -35,4 +35,8 @@ export class DeviceService {
   static async createBrand(brand: IBrand): Promise<AxiosResponse<IBrand>> {
     return $authHost.post<IBrand>("api/brand", brand);
   }
+
+  static async createDevice(device: FormData): Promise<AxiosResponse<IDevice>> {
+    return $authHost.post<IDevice>("api/device", device);
+  }
 }

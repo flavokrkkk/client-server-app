@@ -23,13 +23,11 @@ const BasketList: FC<BasketListProps> = ({ device }) => {
     countDeviceInBasket(device);
   });
 
-  console.log(count);
-
   return (
     <Card className=" p-2 mb-4">
       <Card.Header className="text-center">{device.name}</Card.Header>
       <CardBody className=" d-flex justify-content-center">
-        <div>
+        <div className=" text-center">
           <Image src={httpHost.REACT_APP_API_URL + device.img} height={150} />
           <div className=" text-center mt-2">
             {device.info.map((el) => (

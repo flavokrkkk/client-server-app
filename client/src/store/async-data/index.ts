@@ -1,9 +1,9 @@
-import { $authHost } from "../../http";
 import { DeviceService } from "../../http/deviceApi";
 import { IBrand } from "../../models/IBrand";
+import { IFetchDeviceParams } from "../../models/IFetchDevice";
 import { IType } from "../../models/IType";
 import { deviceSlice } from "../reducers/deviceSlice/deviceSlice";
-import { Dispatch } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const AsyncDataActions = {
   setAsyncTypes: deviceSlice.actions.setTypes,
@@ -12,71 +12,97 @@ export const AsyncDataActions = {
   setAsyncDevice: deviceSlice.actions.setDevice,
   setTotalCount: deviceSlice.actions.setTotalCount,
 
-  fetchAsyncTypes: () => async (dispatch: Dispatch) => {
-    try {
-      const { data } = await DeviceService.fetchTypes();
-      dispatch(AsyncDataActions.setAsyncTypes(data));
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
-  createAsyncTypes: (type: IType) => async () => {
-    const { data } = await DeviceService.createType(type);
-    return data;
-  },
-
-  // - бренды
-
-  fetchAsyncBrands: () => async (dispatch: Dispatch) => {
-    try {
-      const { data } = await DeviceService.fetchBrands();
-      dispatch(AsyncDataActions.setAsyncBrands(data));
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
-  createAsyncBrand: (brand: IBrand) => async () => {
-    const { data } = await DeviceService.createBrand(brand);
-    return data;
-  },
-
-  // - девайсы
-
-  fetchAsyncDevices:
-    (
-      typeId: number | null,
-      brandId: number | null,
-      page: number,
-      limit: number = 5,
-    ) =>
-    async (dispatch: Dispatch) => {
+  fetchAsyncTypes: createAsyncThunk(
+    "types/fetchingAsyncTypes",
+    async (_, { dispatch, rejectWithValue }) => {
       try {
+        const { data } = await DeviceService.fetchTypes();
+        dispatch(AsyncDataActions.setAsyncTypes(data));
+      } catch (err) {
+        return rejectWithValue(err);
+      }
+    },
+  ),
+
+  createAsyncType: createAsyncThunk(
+    "types/createAsyncTypes",
+    async (type: IType, { rejectWithValue }) => {
+      try {
+        const { data } = await DeviceService.createType(type);
+        return data;
+      } catch (err) {
+        return rejectWithValue(err);
+      }
+    },
+  ),
+
+  fetchAsyncBrands: createAsyncThunk(
+    "brands/fetchAsyncBrands",
+    async (_, { dispatch, rejectWithValue }) => {
+      try {
+        const { data } = await DeviceService.fetchBrands();
+        dispatch(AsyncDataActions.setAsyncBrands(data));
+      } catch (err) {
+        return rejectWithValue(err);
+      }
+    },
+  ),
+
+  createAsyncBrands: createAsyncThunk(
+    "brands/createAsyncBrands",
+    async (brand: IBrand, { rejectWithValue }) => {
+      try {
+        const { data } = await DeviceService.createBrand(brand);
+        return data;
+      } catch (err) {
+        return rejectWithValue(err);
+      }
+    },
+  ),
+
+  fetchAsyncDevices: createAsyncThunk(
+    "devices/fetchAsyncDevices",
+    async (
+      requestParams: IFetchDeviceParams,
+      { dispatch, rejectWithValue },
+    ) => {
+      try {
+        const { typeId, brandId, page, limit } = requestParams;
         const { data } = await DeviceService.fetchDevices(
           typeId,
           brandId,
           page,
           limit,
         );
-        dispatch(AsyncDataActions.setTotalCount(data.count));
         dispatch(AsyncDataActions.setAsyncDevices(data.rows));
+        dispatch(AsyncDataActions.setTotalCount(data.count));
       } catch (err) {
-        console.log(err);
+        return rejectWithValue(err);
       }
     },
+  ),
 
-  fetchAsyncDevice: (id: string) => async (dispatch: Dispatch) => {
-    try {
-      const response = await DeviceService.fetchDevice(id);
-      dispatch(AsyncDataActions.setAsyncDevice(response.data));
-    } catch (err) {
-      console.log(err);
-    }
-  },
+  fetchAsyncDevice: createAsyncThunk(
+    "devices/fetchAsyncDevice",
+    async (id: string, { dispatch, rejectWithValue }) => {
+      try {
+        const { data } = await DeviceService.fetchDevice(id);
+        dispatch(AsyncDataActions.setAsyncDevice(data));
+      } catch (err) {
+        rejectWithValue(err);
+      }
+    },
+  ),
 
-  createAsyncDevice: (device: FormData) => async () => {
-    const { data } = await $authHost.post("api/device", device);
-    return data;
-  },
+  createAsyncDevice: createAsyncThunk(
+    "devices/createAsyncDevice",
+    async (device: FormData, { rejectWithValue }) => {
+      try {
+        const { data } = await DeviceService.createDevice(device);
+        return data;
+      } catch (err) {
+        rejectWithValue(err);
+      }
+    },
+  ),
 };

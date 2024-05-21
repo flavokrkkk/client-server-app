@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import Pages from "../../components/UI/Pagination/Pages";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { DeviceSelectors } from "../../store/selectors/selectors";
+import {} from "../../store/async-data";
+import { IFetchDeviceParams } from "../../models/IFetchDevice";
 
 const ShopPage = () => {
   const { fetchAsyncTypes, fetchAsyncBrands, fetchAsyncDevices } = useActions();
@@ -16,11 +18,21 @@ const ShopPage = () => {
   useEffect(() => {
     fetchAsyncTypes();
     fetchAsyncBrands();
-    fetchAsyncDevices(null, null, 1, 5);
+    fetchAsyncDevices({
+      typeId: null,
+      brandId: null,
+      page: 1,
+      limit: 3,
+    } as IFetchDeviceParams);
   }, []);
 
   useEffect(() => {
-    fetchAsyncDevices(selectedType.id, selectedBrand.id, page, 4);
+    fetchAsyncDevices({
+      typeId: selectedType.id,
+      brandId: selectedBrand.id,
+      page,
+      limit: 4,
+    } as IFetchDeviceParams);
   }, [page, selectedType, selectedBrand]);
 
   return (

@@ -11,14 +11,14 @@ interface ModalTypeProps {
 const ModalType: FC<ModalTypeProps> = ({ isShow, onHideModal }) => {
   const [type, setType] = useState<string>("");
 
-  const { createAsyncTypes } = useActions();
+  const { createAsyncType } = useActions();
 
   const handleChangeEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
     setType(event.target.value);
   };
 
   const handleCreateType = () => {
-    createAsyncTypes({ name: type } as IType);
+    createAsyncType({ name: type } as IType);
     setType("");
     onHideModal();
   };
