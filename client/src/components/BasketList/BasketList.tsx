@@ -4,7 +4,11 @@ import { Button, Card, CardBody, Image } from "react-bootstrap";
 import { httpHost } from "../../utils/enums";
 import { useActions } from "../../hooks/useActions";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { BasketSelectors } from "../../store/selectors/selectors";
+import {
+  BasketSelectors,
+  UserSelectors,
+} from "../../store/selectors/selectors";
+import { IUser } from "../../models/IUser";
 
 interface BasketListProps {
   device: IDevice;
@@ -15,13 +19,15 @@ const BasketList: FC<BasketListProps> = ({ device }) => {
 
   const { count } = useAppSelector(BasketSelectors);
 
+  const { user } = useAppSelector(UserSelectors);
+
   const handleDeleteDevice = () => {
-    deleteBasketInLocalStorage(device.id);
+    deleteBasketInLocalStorage(user as IUser, device.id);
   };
 
   useEffect(() => {
     countDeviceInBasket(device);
-  });
+  }, []);
 
   return (
     <Card className=" p-2 mb-4">

@@ -1,18 +1,22 @@
 import { Container } from "react-bootstrap";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { BasketSelectors } from "../../store/selectors/selectors";
+import {
+  BasketSelectors,
+  UserSelectors,
+} from "../../store/selectors/selectors";
 import BasketList from "../../components/BasketList/BasketList";
 import { BasketWrapperCard } from "../../styles/global";
 import { useEffect } from "react";
 import { useActions } from "../../hooks/useActions";
+import { IUser } from "../../models/IUser";
 
 const BasketPage = () => {
   const { basket } = useAppSelector(BasketSelectors);
-
+  const { user } = useAppSelector(UserSelectors);
   const { fetchBasketInLocalStorage } = useActions();
 
   useEffect(() => {
-    fetchBasketInLocalStorage();
+    fetchBasketInLocalStorage(user as IUser);
   }, []);
 
   return (

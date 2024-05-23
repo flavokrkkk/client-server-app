@@ -5,13 +5,16 @@ import { FC, useEffect } from "react";
 import { IDescription } from "../models/IDescription";
 import { httpHost } from "../utils/enums";
 import { useActions } from "../hooks/useActions";
+import { useAppSelector } from "../hooks/useAppSelector";
+import { UserSelectors } from "../store/selectors/selectors";
+import { IUser } from "../models/IUser";
 
 interface DeviceItemProps {
   device: IDevice;
   description: IDescription[];
   isBasket: boolean;
   id: string;
-  hasDeviceInBasket: (id: string) => void;
+  hasDeviceInBasket: (user: IUser, id: string) => void;
 }
 
 const DeviceItem: FC<DeviceItemProps> = ({
@@ -23,12 +26,14 @@ const DeviceItem: FC<DeviceItemProps> = ({
 }) => {
   const { addDeviceToBasket } = useActions();
 
+  const { user } = useAppSelector(UserSelectors);
+
   const handleAddedDeviceToBasket = () => {
-    addDeviceToBasket(device);
+    addDeviceToBasket(user as IUser, device);
   };
 
   useEffect(() => {
-    hasDeviceInBasket(id);
+    hasDeviceInBasket(user as IUser, id);
   }, [handleAddedDeviceToBasket]);
 
   return (

@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { BasketState } from "./types";
-import { IDevice } from "../../../models/IDevice";
+import { BasketState, IBasket } from "./types";
 
 const initialState = <BasketState>{
   basket: [],
@@ -12,7 +11,7 @@ export const basketSlice = createSlice({
   name: "basket",
   initialState,
   reducers: {
-    addDevice(state, { payload }: PayloadAction<IDevice[]>) {
+    addDevice(state, { payload }: PayloadAction<IBasket[]>) {
       state.basket = payload;
     },
     deleteDevice(state, { payload }: PayloadAction<number>) {

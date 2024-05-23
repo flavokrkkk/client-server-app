@@ -1,6 +1,8 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import { basketSlice } from ".";
 import { IDevice } from "../../../models/IDevice";
+import { IBasket } from "./types";
+import { IUser } from "../../../models/IUser";
 
 export const BasketActionCreators = {
   addDevice: basketSlice.actions.addDevice,
@@ -8,14 +10,12 @@ export const BasketActionCreators = {
   isBasket: basketSlice.actions.hasIsBasket,
   count: basketSlice.actions.setCount,
 
-  addDeviceToBasket: (device: IDevice) => (dispatch: Dispatch) => {
+  addDeviceToBasket: (user: IUser, device: IDevice) => (dispatch: Dispatch) => {
     try {
       const devices = localStorage.getItem("basket") || "[]";
 
-      const json = JSON.parse(devices) as IDevice[];
-
-      json.push(device);
-
+      const json = JSON.parse(devices) as IBasket[];
+      json.push({ ...device, userId: user.id });
       dispatch(BasketActionCreators.addDevice(json));
       localStorage.setItem("basket", JSON.stringify(json));
     } catch (err) {
@@ -23,35 +23,44 @@ export const BasketActionCreators = {
     }
   },
 
-  fetchBasketInLocalStorage: () => (dispatch: Dispatch) => {
+  fetchBasketInLocalStorage: (user: IUser) => (dispatch: Dispatch) => {
     if (localStorage.getItem("basket")) {
       const basket = localStorage.getItem("basket") || "[]";
-      const basketJson = JSON.parse(basket);
-      dispatch(BasketActionCreators.addDevice(basketJson));
+      const basketJson = JSON.parse(basket) as IBasket[];
+      const userBasket = basketJson.filter(
+        (basket) => basket.userId === user.id,
+      );
+      dispatch(BasketActionCreators.addDevice(userBasket));
     }
   },
 
-  deleteBasketInLocalStorage: (id: number) => (dispatch: Dispatch) => {
-    try {
-      if (localStorage.getItem("basket")) {
-        const basket: IDevice[] = JSON.parse(
-          localStorage.getItem("basket") || "[]",
-        );
-        const removeDeviceInBasket = basket.filter(
-          (device) => device.id !== id,
-        );
-        localStorage.setItem("basket", JSON.stringify(removeDeviceInBasket));
-        dispatch(BasketActionCreators.deleteBasket(id));
+  deleteBasketInLocalStorage:
+    (user: IUser, id: number) => (dispatch: Dispatch) => {
+      try {
+        if (localStorage.getItem("basket")) {
+          const basket: IBasket[] = JSON.parse(
+            localStorage.getItem("basket") || "[]",
+          );
+
+          const userBasket = basket.filter(
+            (basket) => basket.userId === user.id,
+          );
+
+          const removeDeviceInBasket = userBasket.filter(
+            (device) => device.id !== id,
+          );
+          localStorage.setItem("basket", JSON.stringify(removeDeviceInBasket));
+          dispatch(BasketActionCreators.deleteBasket(id));
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
-  },
+    },
 
   countDeviceInBasket: (device: IDevice) => (dispatch: Dispatch) => {
     try {
       if (localStorage.getItem("basket")) {
-        const devices: IDevice[] = JSON.parse(
+        const devices: IBasket[] = JSON.parse(
           localStorage.getItem("basket") || "[]",
         );
 
@@ -66,13 +75,13 @@ export const BasketActionCreators = {
     }
   },
 
-  hasDeviceInBasket: (id: string) => (dispatch: Dispatch) => {
+  hasDeviceInBasket: (user: IUser, id: string) => (dispatch: Dispatch) => {
     if (localStorage.getItem("basket")) {
-      const devices: IDevice[] = JSON.parse(
+      const devices: IBasket[] = JSON.parse(
         localStorage.getItem("basket") || "[]",
       );
-      console.log(devices);
-      const isBasket = devices.find((c) => c.id === Number(id));
+      const userBasket = devices.filter((basket) => basket.userId === user.id);
+      const isBasket = userBasket.find((c) => c.id === Number(id));
       return isBasket
         ? dispatch(BasketActionCreators.isBasket(true))
         : dispatch(BasketActionCreators.isBasket(false));
