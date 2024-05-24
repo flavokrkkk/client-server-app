@@ -84,7 +84,7 @@ const DeviceItem: FC<DeviceItemProps> = ({
       <Row className="d-flex flex-column m-3">
         {description.map((info, index) => (
           <DeviceCard key={info.id} index={index}>
-            <Row className=" p-2">{`${info.title}: ${info.description}`}</Row>
+            <Row className="p-2">{`${info.title}: ${info.description}`}</Row>
           </DeviceCard>
         ))}
       </Row>

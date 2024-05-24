@@ -16,7 +16,7 @@ const DropDownListType: FC<DropDownListTypeProps> = ({
   };
 
   return (
-    <Dropdown.Item onClick={handleSelectTypeList} key={item.id}>
+    <Dropdown.Item key={item.id} onClick={handleSelectTypeList}>
       {item.name}
     </Dropdown.Item>
   );

@@ -4,8 +4,8 @@ import { UserSelectors } from "../../../store/selectors/selectors";
 import { NavLink, useNavigate } from "react-router-dom";
 import { RoutesName } from "../../../utils/enums";
 import { useActions } from "../../../hooks/useActions";
-import basketSwg from "../../../static/icons8-корзина-50.png";
-import userProfile from "../../../static/profile_jwr3y85tihsn.svg";
+import BasketIcon from "../../../assets/BasketIcon";
+import ProfileIcon from "../../../assets/ProfileIcon";
 
 const NavBar = () => {
   const { isAuth } = useAppSelector(UserSelectors);
@@ -36,16 +36,19 @@ const NavBar = () => {
         {isAuth ? (
           <Nav className="ml-auto">
             <div className="d-flex gap-3">
-              <div>
-                <NavLink to={RoutesName.PROFILE}>
-                  <img src={userProfile} height={30} />
-                </NavLink>
+              <div className=" d-flex gap-4">
+                <div>
+                  <NavLink to={RoutesName.PROFILE}>
+                    <ProfileIcon height={30} width={25} bg="#fff" />
+                  </NavLink>
+                </div>
+                <div>
+                  <NavLink to={RoutesName.BASKET}>
+                    <BasketIcon height={30} width={22} bg="#fff" />
+                  </NavLink>
+                </div>
               </div>
-              <div>
-                <NavLink to={RoutesName.BASKET}>
-                  <img src={basketSwg} height={20} />
-                </NavLink>
-              </div>
+
               <Button
                 size="sm"
                 variant="outline-light"
@@ -65,7 +68,7 @@ const NavBar = () => {
         ) : (
           <Nav className="ml-auto">
             <div>
-              <Button onClick={toggleIsAuth} size="sm" variant="outline-light">
+              <Button size="sm" variant="outline-light" onClick={toggleIsAuth}>
                 Authorization
               </Button>
             </div>

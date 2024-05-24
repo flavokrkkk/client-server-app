@@ -1,5 +1,6 @@
 import { DeviceService } from "../../http/deviceApi";
 import { IBrand } from "../../models/IBrand";
+import { IDevice } from "../../models/IDevice";
 import { IFetchDeviceParams } from "../../models/IFetchDevice";
 import { IType } from "../../models/IType";
 import { deviceSlice } from "../reducers/deviceSlice/deviceSlice";
@@ -24,14 +25,14 @@ export const AsyncDataActions = {
     },
   ),
 
-  createAsyncType: createAsyncThunk(
+  createAsyncType: createAsyncThunk<IType, IType, { rejectValue: string }>(
     "types/createAsyncTypes",
     async (type: IType, { rejectWithValue }) => {
       try {
         const { data } = await DeviceService.createType(type);
         return data;
       } catch (err) {
-        return rejectWithValue(err);
+        return rejectWithValue(`${err}`);
       }
     },
   ),
@@ -48,14 +49,14 @@ export const AsyncDataActions = {
     },
   ),
 
-  createAsyncBrands: createAsyncThunk(
+  createAsyncBrands: createAsyncThunk<IBrand, IBrand, { rejectValue: string }>(
     "brands/createAsyncBrands",
     async (brand: IBrand, { rejectWithValue }) => {
       try {
         const { data } = await DeviceService.createBrand(brand);
         return data;
       } catch (err) {
-        return rejectWithValue(err);
+        return rejectWithValue(`${err}`);
       }
     },
   ),
@@ -94,15 +95,18 @@ export const AsyncDataActions = {
     },
   ),
 
-  createAsyncDevice: createAsyncThunk(
-    "devices/createAsyncDevice",
-    async (device: FormData, { rejectWithValue }) => {
-      try {
+  createAsyncDevice: createAsyncThunk<
+    IDevice | undefined,
+    FormData,
+    { rejectValue: string }
+  >("devices/createAsyncDevice", async (device, { rejectWithValue }) => {
+    try {
+      if (device) {
         const { data } = await DeviceService.createDevice(device);
         return data;
-      } catch (err) {
-        rejectWithValue(err);
       }
-    },
-  ),
+    } catch (err) {
+      rejectWithValue(`${err}`);
+    }
+  }),
 };

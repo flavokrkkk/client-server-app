@@ -3,18 +3,15 @@ import { useAppSelector } from "../../../hooks/useAppSelector";
 import { DeviceSelectors } from "../../../store/selectors/selectors";
 import { useActions } from "../../../hooks/useActions";
 import PagesList from "./PagesList";
+import { handlePagesCount } from "../../../helpers/pageCount";
 
 const Pages = () => {
   const { limit, page, totalCount } = useAppSelector(DeviceSelectors);
 
   const { setPage } = useActions();
 
-  const pagesCount = Math.floor(totalCount / limit);
+  const pages = handlePagesCount(totalCount, limit);
 
-  const pages = [];
-  for (let i = 0; i <= pagesCount; i++) {
-    pages.push(i + 1);
-  }
   const handleAppendPage = (page: number) => {
     setPage(page);
   };

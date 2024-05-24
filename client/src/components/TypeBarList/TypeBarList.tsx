@@ -28,8 +28,8 @@ const TypeBarList: FC<TypeBarListProps> = ({
         key={type.id}
         active={isSelectedType}
         variant={isSelectedType ? "secondary" : ""}
-        onClick={toggleSetSelected}
         className="d-flex justify-content-between align-items-start"
+        onClick={toggleSetSelected}
       >
         <ListGroupName className="ms-2 me-auto">{type.name}</ListGroupName>
         <Badge

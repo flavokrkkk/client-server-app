@@ -9,4 +9,4 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 //AppDispatch - тип который знает о actions нашего приложения
-export const AppDispatch = typeof store.dispatch;
+export type AppDispatch = typeof store.dispatch;

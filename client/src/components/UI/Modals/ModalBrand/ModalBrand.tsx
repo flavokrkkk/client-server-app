@@ -11,14 +11,14 @@ interface ModalBrandProps {
 const ModalBrand: FC<ModalBrandProps> = ({ isShow, onHideModal }) => {
   const [brand, setBrand] = useState<string>("");
 
-  const { createAsyncBrand } = useActions();
+  const { createAsyncBrands } = useActions();
 
   const handleChangeEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
     setBrand(event.target.value);
   };
 
   const handleCreateBrand = () => {
-    createAsyncBrand({ name: brand } as IBrand);
+    createAsyncBrands({ name: brand } as IBrand);
     setBrand("");
     onHideModal();
   };

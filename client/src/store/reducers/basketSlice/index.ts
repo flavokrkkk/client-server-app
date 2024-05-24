@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { BasketState, IBasket } from "./types";
+import { BasketState } from "./types";
+import { IBasket } from "../../../models/IBasket";
 
 const initialState = <BasketState>{
   basket: [],

@@ -1,8 +1,8 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import { basketSlice } from ".";
 import { IDevice } from "../../../models/IDevice";
-import { IBasket } from "./types";
 import { IUser } from "../../../models/IUser";
+import { IBasket } from "../../../models/IBasket";
 
 export const BasketActionCreators = {
   addDevice: basketSlice.actions.addDevice,

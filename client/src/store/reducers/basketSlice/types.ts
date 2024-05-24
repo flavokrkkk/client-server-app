@@ -1,8 +1,4 @@
-import { IDevice } from "../../../models/IDevice";
-
-export interface IBasket extends IDevice {
-  userId: number;
-}
+import { IBasket } from "../../../models/IBasket";
 
 export interface BasketState {
   basket: IBasket[];
