@@ -42,14 +42,16 @@ export const BasketActionCreators = {
             localStorage.getItem("basket") || "[]",
           );
 
-          const userBasket = basket.filter(
-            (basket) => basket.userId === user.id,
-          );
+          const duplicateDevice = basket.filter((b) => b.id === id);
 
-          const removeDeviceInBasket = userBasket.filter(
-            (device) => device.id !== id,
+          const removeDevice = basket.filter((b) => b.id !== id);
+          const currentDevice = duplicateDevice.find(
+            (b) => b.userId !== user.id,
           );
-          localStorage.setItem("basket", JSON.stringify(removeDeviceInBasket));
+          if (currentDevice) {
+            removeDevice.push(currentDevice);
+          }
+          localStorage.setItem("basket", JSON.stringify(removeDevice));
           dispatch(BasketActionCreators.deleteBasket(id));
         }
       } catch (err) {
@@ -57,23 +59,28 @@ export const BasketActionCreators = {
       }
     },
 
-  countDeviceInBasket: (device: IDevice) => (dispatch: Dispatch) => {
-    try {
-      if (localStorage.getItem("basket")) {
-        const devices: IBasket[] = JSON.parse(
-          localStorage.getItem("basket") || "[]",
-        );
+  countDeviceInBasket:
+    (user: IUser, device: IDevice) => (dispatch: Dispatch) => {
+      try {
+        if (localStorage.getItem("basket")) {
+          const devices: IBasket[] = JSON.parse(
+            localStorage.getItem("basket") || "[]",
+          );
 
-        const count = devices.filter(
-          (basketDevice) => basketDevice.name === device.name,
-        ).length;
+          const userBasket = devices.filter(
+            (basket) => basket.userId === user.id,
+          );
 
-        dispatch(BasketActionCreators.count(count));
+          const count = userBasket.filter(
+            (basketDevice) => basketDevice.name === device.name,
+          ).length;
+
+          dispatch(BasketActionCreators.count(count));
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
-  },
+    },
 
   hasDeviceInBasket: (user: IUser, id: string) => (dispatch: Dispatch) => {
     if (localStorage.getItem("basket")) {

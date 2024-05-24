@@ -23,6 +23,12 @@ export const basketSlice = createSlice({
     setCount(state, { payload }: PayloadAction<number>) {
       state.count = payload;
     },
+    setIncrementCount: (state) => {
+      state.count += 1;
+    },
+    setDecrementCount: (state) => {
+      state.count -= 1;
+    },
   },
 });
 

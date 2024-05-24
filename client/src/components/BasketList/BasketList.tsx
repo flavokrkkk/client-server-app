@@ -15,7 +15,12 @@ interface BasketListProps {
 }
 
 const BasketList: FC<BasketListProps> = ({ device }) => {
-  const { deleteBasketInLocalStorage, countDeviceInBasket } = useActions();
+  const {
+    deleteBasketInLocalStorage,
+    countDeviceInBasket,
+    setIncrementCount,
+    setDecrementCount,
+  } = useActions();
 
   const { count } = useAppSelector(BasketSelectors);
 
@@ -25,8 +30,17 @@ const BasketList: FC<BasketListProps> = ({ device }) => {
     deleteBasketInLocalStorage(user as IUser, device.id);
   };
 
+  const handleIncrementDevice = () => {
+    setIncrementCount();
+  };
+  const handleDecrementDevice = () => {
+    if (count !== 1) {
+      setDecrementCount();
+    }
+  };
+
   useEffect(() => {
-    countDeviceInBasket(device);
+    countDeviceInBasket(user as IUser, device);
   }, []);
 
   return (
@@ -41,14 +55,23 @@ const BasketList: FC<BasketListProps> = ({ device }) => {
             ))}
           </div>
           <div className=" d-flex justify-content-center gap-3">
-            <Button variant="outline-dark" className=" mb-2">
+            <Button
+              variant="outline-dark"
+              className=" mb-2"
+              onClick={handleDecrementDevice}
+            >
               -
             </Button>
-            <Button variant="outline-dark" className=" mb-2">
+            <Button
+              variant="outline-dark"
+              className=" mb-2"
+              onClick={handleIncrementDevice}
+            >
               +
             </Button>
           </div>
           <div className=" text-center">{count}</div>
+          <div>{device.price * count}$</div>
         </div>
       </CardBody>
       <Button variant="outline-dark" className=" mb-2">

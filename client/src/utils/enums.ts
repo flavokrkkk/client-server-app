@@ -5,6 +5,7 @@ export const enum RoutesName {
   LOGIN = "/login",
   REGISTRATION = "/registration",
   BASKET = "/basket",
+  PROFILE = "/profile",
 }
 
 export const enum httpHost {

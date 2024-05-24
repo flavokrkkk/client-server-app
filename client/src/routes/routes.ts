@@ -3,6 +3,7 @@ import AdminPage from "../pages/AdminPage/AdminPage";
 import AuthPage from "../pages/AuthPage/AuthPage";
 import BasketPage from "../pages/BasketPage/BasketPage";
 import DevicePage from "../pages/DevicePage/DevicePage";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import ShopPage from "../pages/ShopPage/ShopPage";
 import { RoutesName } from "../utils/enums";
 
@@ -15,6 +16,10 @@ export const privateRoute: IRoute[] = [
   {
     path: RoutesName.BASKET,
     component: BasketPage,
+  },
+  {
+    path: RoutesName.PROFILE,
+    component: ProfilePage,
   },
 ];
 
