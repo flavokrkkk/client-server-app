@@ -7,15 +7,26 @@ import {
 } from "react-bootstrap";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { UserSelectors } from "../../store/selectors/selectors";
-import { IUser } from "../../models/IUser";
-import { useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 
 const ProfilePage = () => {
   const { user } = useAppSelector(UserSelectors);
 
-  const [isAvailableEmail, setIsAvailableEmail] = useState(false);
+  const [isAvailableEmail, setIsAvailableEmail] = useState(true);
 
-  const userInfo: IUser = user;
+  const [email, setEmail] = useState("");
+
+  const handleChangeEmail: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const toggleEmail = () => {
+    setIsAvailableEmail(false);
+  };
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
   return (
     <Container className="mt-4">
@@ -40,11 +51,16 @@ const ProfilePage = () => {
             <div className=" mb-4">
               <FormControl
                 type="text"
-                placeholder={userInfo.email}
+                value={email}
                 disabled={isAvailableEmail}
-                readOnly
+                onChange={handleChangeEmail}
               />
-              <Button className="mt-2" size="sm" variant="outline-dark">
+              <Button
+                className="mt-2"
+                size="sm"
+                variant="outline-dark"
+                onClick={toggleEmail}
+              >
                 Изменить E-mail
               </Button>
             </div>

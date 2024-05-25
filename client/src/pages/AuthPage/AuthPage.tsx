@@ -3,6 +3,12 @@ import { RoutesName } from "../../utils/enums";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import { login, registration } from "../../http/userApi";
 import { useActions } from "../../hooks/useActions";
+// import { FormSubmitHandler, useForm } from "react-hook-form";
+
+export interface LoginForm {
+  email: string;
+  password: string;
+}
 
 const AuthPage = () => {
   const { setUser, setIsAuth } = useActions();
@@ -10,6 +16,12 @@ const AuthPage = () => {
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
+
+  // const { register, handleSubmit } = useForm<LoginForm>();
+
+  // const onSubmitForm: FormSubmitHandler<LoginForm> = ({ data }) => {
+  //   console.log(data.email, data.password);
+  // };
 
   const isPathName = pathname === RoutesName.LOGIN;
 

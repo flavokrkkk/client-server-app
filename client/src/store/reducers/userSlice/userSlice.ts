@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UserState } from "./types";
 import { IUser } from "../../../models/IUser";
-import { JwtPayload } from "jwt-decode";
+// import { JwtPayload } from "jwt-decode";
 
 export const initialState = <UserState>{
   isAuth: false,
@@ -16,11 +16,15 @@ export const userSlice = createSlice({
     setIsAuth(state, { payload }: PayloadAction<boolean>) {
       state.isAuth = payload;
     },
-    setUser(state, { payload }: PayloadAction<IUser | JwtPayload>) {
+    setUser(state, { payload }: PayloadAction<IUser>) {
       state.user = payload;
     },
     setIsLoading(state, { payload }: PayloadAction<boolean>) {
       state.isLoading = payload;
+    },
+
+    setEmailUser(state, { payload }: PayloadAction<string>) {
+      state.user.email = payload;
     },
   },
 });
